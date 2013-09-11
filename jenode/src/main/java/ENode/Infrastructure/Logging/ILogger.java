@@ -8,7 +8,7 @@ public interface ILogger
 	/** Indicates whether the logger can write debug level log messages.
 	 
 	*/
-	boolean getIsDebugEnabled();
+	boolean isDebugEnabled();
 	/** Write a debug level log message.
 	 
 	 @param message

@@ -1,12 +1,14 @@
 ﻿package ENode.Messaging.Impl.SQL;
 
-import ENode.Infrastructure.*;
-import ENode.Infrastructure.Dapper.*;
-import ENode.Infrastructure.Serializing.*;
-import ENode.Infrastructure.Sql.*;
+import ENode.ArgumentNullException;
+import ENode.Infrastructure.ObjectContainer;
+import ENode.Infrastructure.Serializing.IBinarySerializer;
+import ENode.Infrastructure.Sql.IDbConnectionFactory;
+import ENode.Messaging.IMessage;
+import ENode.Messaging.IMessageStore;
+import ENode.Messaging.IQueueTableNameProvider;
 
 /** The SQL implementation of IMessageStore.
- 
 */
 public class SqlMessageStore implements IMessageStore
 {
@@ -31,9 +33,9 @@ public class SqlMessageStore implements IMessageStore
 	*/
 	public SqlMessageStore(String connectionString)
 	{
-		if (DotNetToJavaStringHelper.isNullOrEmpty(connectionString))
+		if (tangible.DotNetToJavaStringHelper.isNullOrEmpty(connectionString))
 		{
-			throw new ArgumentNullException("connectionString");
+			throw new IllegalArgumentException("connectionString");
 		}
 
 		_connectionString = connectionString;
@@ -59,13 +61,14 @@ public class SqlMessageStore implements IMessageStore
 	*/
 	public final void AddMessage(String queueName, IMessage message)
 	{
-//C# TO JAVA CONVERTER TODO TASK: Lambda expressions and anonymous methods are not converted by C# to Java Converter:
 		_connectionFactory.CreateConnection(_connectionString).TryExecute(connection =>
 		{
-			String tableName = _queueTableNameProvider.GetTable(queueName);
-			byte[] messageData = _binarySerializer.Serialize(message);
+//C# TO JAVA CONVERTER TODO TASK: There is no equivalent to implicit typing in Java:
+			var tableName = _queueTableNameProvider.GetTable(queueName);
+//C# TO JAVA CONVERTER TODO TASK: There is no equivalent to implicit typing in Java:
+			var messageData = _binarySerializer.Serialize(message);
 //C# TO JAVA CONVERTER TODO TASK: This type of object initializer has no direct Java equivalent:
-			connection.Insert(new { MessageId = message.getId(), MessageData = messageData }, tableName);
+			connection.Insert(new {MessageId = message.Id, MessageData = messageData}, tableName);
 		}
 	   );
 	}
@@ -76,12 +79,12 @@ public class SqlMessageStore implements IMessageStore
 	*/
 	public final void RemoveMessage(String queueName, IMessage message)
 	{
-//C# TO JAVA CONVERTER TODO TASK: Lambda expressions and anonymous methods are not converted by C# to Java Converter:
 		_connectionFactory.CreateConnection(_connectionString).TryExecute(connection =>
 		{
-			String tableName = _queueTableNameProvider.GetTable(queueName);
+//C# TO JAVA CONVERTER TODO TASK: There is no equivalent to implicit typing in Java:
+			var tableName = _queueTableNameProvider.GetTable(queueName);
 //C# TO JAVA CONVERTER TODO TASK: This type of object initializer has no direct Java equivalent:
-			connection.Delete(new { MessageId = message.getId() }, tableName);
+			connection.Delete(new {MessageId = message.Id}, tableName);
 		}
 	   );
 	}
@@ -91,17 +94,17 @@ public class SqlMessageStore implements IMessageStore
 	 @param queueName
 	 @return 
 	*/
-//C# TO JAVA CONVERTER TODO TASK: The C# 'class' constraint has no equivalent in Java:
-	public final <T extends class & IMessage> Iterable<T> GetMessages(String queueName)
+	public final <T extends IMessage> Iterable<T> GetMessages(String queueName)
 	{
-//C# TO JAVA CONVERTER TODO TASK: Lambda expressions and anonymous methods are not converted by C# to Java Converter:
 		return _connectionFactory.CreateConnection(_connectionString).<Iterable<T>>TryExecute(connection =>
 		{
-			String tableName = _queueTableNameProvider.GetTable(queueName);
+//C# TO JAVA CONVERTER TODO TASK: There is no equivalent to implicit typing in Java:
+			var tableName = _queueTableNameProvider.GetTable(queueName);
 //C# TO JAVA CONVERTER TODO TASK: There is no equivalent to implicit typing in Java:
 			var items = connection.QueryAll(tableName);
-//C# TO JAVA CONVERTER TODO TASK: Lambda expressions and anonymous methods are not converted by C# to Java Converter:
-			return items.Select(item => _binarySerializer.getDeserialize()<T>((byte[]) item.MessageData)).ToList();
+//C# TO JAVA CONVERTER WARNING: Unsigned integer types have no direct equivalent in Java:
+//ORIGINAL LINE: return items.Select(item => _binarySerializer.Deserialize<T>((byte[]) item.MessageData)).ToList();
+			return items.Select(item => _binarySerializer.<T>Deserialize((byte[]) item.MessageData)).ToList();
 		}
 	   );
 	}

@@ -1,5 +1,8 @@
 ﻿package ENode.Messaging.Impl.SQL;
 
+import tangible.DotNetToJavaStringHelper;
+import ENode.Messaging.IQueueTableNameProvider;
+
 /** The default implementation of IQueueTableNameProvider.
  
 */

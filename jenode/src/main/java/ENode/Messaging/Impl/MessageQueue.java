@@ -1,5 +1,10 @@
 ﻿package ENode.Messaging.Impl;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.Queue;
+
 import ENode.Infrastructure.ObjectContainer;
 import ENode.Infrastructure.Logging.ILogger;
 import ENode.Infrastructure.Logging.ILoggerFactory;
@@ -17,9 +22,10 @@ public abstract class MessageQueue<T extends IMessage> implements IMessageQueue<
 		///#region Private Variables
 
 	private IMessageStore _messageStore;
-	private final BlockingCollection<T> _queue = new BlockingCollection<T>(new ConcurrentQueue<T>());
-	private final ReaderWriterLockSlim _enqueueLocker = new ReaderWriterLockSlim();
-	private final ReaderWriterLockSlim _dequeueLocker = new ReaderWriterLockSlim();
+//	private final BlockingCollection<T> _queue = new BlockingCollection<T>(new ConcurrentQueue<T>());
+	private final Queue<T> _queue = new LinkedList<T>();
+//	private final ReaderWriterLockSlim _enqueueLocker = new ReaderWriterLockSlim();
+//	private final ReaderWriterLockSlim _dequeueLocker = new ReaderWriterLockSlim();
 
 //C# TO JAVA CONVERTER TODO TASK: There is no preprocessor in Java:
 		///#endregion
@@ -60,8 +66,8 @@ public abstract class MessageQueue<T extends IMessage> implements IMessageQueue<
 		}
 
 		setName(name);
-		_messageStore = ObjectContainer.<IMessageStore>Resolve();
-		setLogger(ObjectContainer.<ILoggerFactory>Resolve().Create(getClass().getName()));
+		_messageStore = ObjectContainer.Resolve(IMessageStore.class);
+		setLogger(ObjectContainer.Resolve(ILoggerFactory.class).Create(getClass().getName()));
 	}
 
 	/** Initialize the message queue.
@@ -69,13 +75,13 @@ public abstract class MessageQueue<T extends IMessage> implements IMessageQueue<
 	public final void Initialize()
 	{
 		_messageStore.Initialize(getName());
-		java.util.ArrayList<Object> messages = _messageStore.<T>GetMessages(getName()).ToList();
+		Iterable<T> messages = _messageStore.GetMessages(getName());//a.ToList();
 //C# TO JAVA CONVERTER TODO TASK: There is no equivalent to implicit typing in Java:
-		for (var message : messages)
+		for (T message : messages)
 		{
 			message.MarkAsRestoreFromStorage();
-			_queue.Add(message);
-			getLogger().InfoFormat("{0} recovered, id:{1}", message.toString(), message.Id);
+			_queue.add(message);
+			getLogger().InfoFormat("{0} recovered, id:{1}", message.toString(), message.getId());
 		}
 		OnInitialized(messages);
 	}
@@ -92,16 +98,16 @@ public abstract class MessageQueue<T extends IMessage> implements IMessageQueue<
 	*/
 	public final void Enqueue(T message)
 	{
-		_enqueueLocker.AtomWrite(() =>
-		{
+//		_enqueueLocker.AtomWrite(() =>
+//		{
 			_messageStore.AddMessage(getName(), message);
-			_queue.Add(message);
-			if (getLogger().IsDebugEnabled)
+			_queue.add(message);
+			if (getLogger().isDebugEnabled())
 			{
-				getLogger().DebugFormat("{0} enqueued, id:{1}", message.toString(), message.Id);
+				getLogger().DebugFormat("{0} enqueued, id:{1}", message.toString(), message.getId());
 			}
-		}
-	   );
+//		}
+//	   );
 	}
 	/** Dequeue the message from memory queue.
 	 
@@ -109,7 +115,7 @@ public abstract class MessageQueue<T extends IMessage> implements IMessageQueue<
 	*/
 	public final T Dequeue()
 	{
-		return _queue.Take();
+		return _queue.poll();
 	}
 	/** Remove the message from message store.
 	 
@@ -117,6 +123,8 @@ public abstract class MessageQueue<T extends IMessage> implements IMessageQueue<
 	*/
 	public final void Complete(T message)
 	{
-		_dequeueLocker.AtomWrite(() => _messageStore.RemoveMessage(getName(), message));
+//		_dequeueLocker.AtomWrite(() => 
+		_messageStore.RemoveMessage(getName(), message);
+//		);
 	}
 }
