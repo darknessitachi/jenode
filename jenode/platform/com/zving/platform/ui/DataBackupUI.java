@@ -146,8 +146,8 @@ public class DataBackupUI extends UIFacade
         if (fis != null)
           fis.close();
       }
-      catch (IOException e) {
-        e.printStackTrace();
+      catch (IOException ex) {
+        ex.printStackTrace();
       }
     }
     finally

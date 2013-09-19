@@ -33,7 +33,7 @@ public class UpdateUI extends UIFacade
           break;
         }
       }
-      dt = dt.filter(new Filter() {
+      dt = dt.filter(new Filter<DataRow>() {
         public boolean filter(DataRow dr) {
           return YesOrNo.isYes(dr.getString("NeedUpdate"));
         }

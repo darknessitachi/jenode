@@ -94,7 +94,7 @@ public class UserSelectUI extends UIFacade
   }
 
   public static String[] getSelectedBranchList(String Branches, int level) {
-    Mapx map = new Mapx();
+    Mapx<String, String> map = new Mapx();
     if (StringUtil.isNotEmpty(Branches)) {
       String[] arr = Branches.split("\\,");
       for (int i = 0; i < arr.length; i++) {

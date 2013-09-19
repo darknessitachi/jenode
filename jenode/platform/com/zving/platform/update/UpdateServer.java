@@ -24,7 +24,7 @@ public class UpdateServer
   public void loadContent() throws Exception {
     String xml = ServletUtil.getURLContent(this.url + "/update.xml", "UTF-8");
     XMLParser loader = new XMLParser(xml);
-    List list = loader.getDocument().elements("update.plugin");
+     List<XMLElement> list = loader.getDocument().elements("update.plugin");
 
     File statusFile = new File(Config.getPluginPath() + "update/update.status");
     Mapx map = statusFile.exists() ? PropertiesUtil.read(statusFile) : new Mapx();

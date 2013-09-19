@@ -27,6 +27,8 @@ import com.zving.platform.code.YesOrNo;
 import com.zving.platform.pub.PlatformUtil;
 import com.zving.platform.service.ConfigService;
 import com.zving.schema.ZDConfig;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -36,8 +38,8 @@ public class ConfigUI extends UIFacade
   @Priv("Platform.Config")
   public void init()
   {
-    List configs = ConfigService.getInstance().getAll();
-    List pcs = PluginManager.getInstance().getAllPluginConfig();
+     List<FixedConfigItem> configs = ConfigService.getInstance().getAll();
+     ArrayList<PluginConfig> pcs = PluginManager.getInstance().getAllPluginConfig();
 
     Mapx pnm = new Mapx();
     for (PluginConfig pc : pcs) {
@@ -79,7 +81,7 @@ public class ConfigUI extends UIFacade
         RadioTag radioTag = new RadioTag();
         FixedConfigItem fci = (FixedConfigItem)ConfigService.getInstance().get(dr.getString("id"));
         String option = "";
-        Mapx opm = fci.getOptions();
+         Mapx<String, String> opm = fci.getOptions();
         for (String key : opm.keyArray()) {
           option = option + "," + opm.getString(key) + ":" + key;
         }
@@ -111,7 +113,7 @@ public class ConfigUI extends UIFacade
   public void saveAll()
   {
     Transaction tran = Current.getTransaction();
-    List configs = ConfigService.getInstance().getAll();
+     List<FixedConfigItem> configs = ConfigService.getInstance().getAll();
 
     for (FixedConfigItem fci : configs) {
       String value = this.Request.getString(fci.getID());
@@ -262,7 +264,7 @@ public class ConfigUI extends UIFacade
     DataTable dt = new DataTable();
     dt.insertColumns(new String[] { "ID", "Name" });
     ZDConfig dao = new ZDConfig();
-    DAOSet set = dao.query();
+     DAOSet<ZDConfig> set = dao.query();
     Mapx map = new Mapx();
     for (ZDConfig zc : set) {
       map.put(zc.getCode(), zc);

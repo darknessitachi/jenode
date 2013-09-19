@@ -36,7 +36,7 @@ public class MenuPrivUI extends UIFacade
     DataTable dt = MenuPrivService.getAllMenus();
     final Privilege p = PrivBL.getCurrentPrivilege(type, id);
 
-    dt = dt.filter(new Filter()
+    dt = dt.filter(new Filter<DataRow>()
     {
       public boolean filter(DataRow dr) {
         String privID = dr.getString("ID");
@@ -82,7 +82,7 @@ public class MenuPrivUI extends UIFacade
     }
     Privilege p = PrivBL.getCurrentPrivilege(type, id);
 
-    Mapx items = ap.getPrivItems();
+     Mapx<String, String> items = ap.getPrivItems();
     for (String item : items.keyArray()) {
       String checked = "";
       if ((p.hasPriv(item)) || (PrivBL.isInBranchPrivRange(type, id, item)))
@@ -98,7 +98,7 @@ public class MenuPrivUI extends UIFacade
 
   @Priv("Platform.Role.SetPriv||Platform.User.SetPriv||Platform.Branch.SetPrivRange")
   public void save() {
-    PrivBL.save(this.Request, this.Response, new Filter() {
+    PrivBL.save(this.Request, this.Response, new Filter<String>() {
       public boolean filter(String privID) {
         return MenuPrivUI.this.isMenuPriv(privID);
       }

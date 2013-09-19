@@ -41,7 +41,7 @@ public class CodeUI extends UIFacade
     DataTable dt = qb.fetch();
     LangUtil.decode(dt, "CodeName");
     if (StringUtil.isNotEmpty(SearchCodeType)) {
-      dt = dt.filter(new Filter() {
+      dt = dt.filter(new Filter<DataRow>() {
         public boolean filter(DataRow dr) {
           return (dr.getString("CodeType").indexOf(SearchCodeType) >= 0) || (dr.getString("CodeName").indexOf(SearchCodeType) >= 0);
         }

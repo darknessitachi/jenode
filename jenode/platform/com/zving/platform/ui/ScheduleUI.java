@@ -190,10 +190,10 @@ public class ScheduleUI extends UIFacade
       return;
     }
     AbstractTaskManager ctm = (AbstractTaskManager)CronTaskManagerService.getInstance().get(s.getTypeCode());
-    if (ctm.isRunning(s.getSourceID())) {
+    if (ctm.isRunning(s.getSourceID()+"")) {
       success("<font color=red>" + Lang.get("Cron.RunningNow") + "</font>");
     } else {
-      ctm.execute(s.getSourceID());
+      ctm.execute(s.getSourceID()+"");
       success(Lang.get("Cron.ManualSuccess"));
     }
   }

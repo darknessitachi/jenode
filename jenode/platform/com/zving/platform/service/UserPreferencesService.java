@@ -14,7 +14,7 @@ public class UserPreferencesService extends AbstractExtendService<AbstractUserPr
 
   public static boolean validate(Mapx<String, Object> map)
   {
-    ArrayList keys = map.keyArray();
+     ArrayList<String> keys = map.keyArray();
     for (String key : keys) {
       AbstractUserPreferences up = (AbstractUserPreferences)getInstance().get(key);
       if (up != null)
@@ -29,7 +29,7 @@ public class UserPreferencesService extends AbstractExtendService<AbstractUserPr
   public static Mapx<String, String> process(Mapx<String, Object> request)
   {
     Mapx map = new Mapx();
-    List list = getInstance().getAll();
+     List<AbstractUserPreferences> list = getInstance().getAll();
     for (AbstractUserPreferences up : list) {
       map.put(up.getID(), up.process(request));
     }

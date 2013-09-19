@@ -82,7 +82,7 @@ public class SystemInfoUI extends UIFacade
     Mapx map = statusFile.exists() ? PropertiesUtil.read(statusFile) : new Mapx();
     String lastUpdateTime = Lang.get("Platform.NeverUpdate");
     if (map.size() > 0) {
-      List list = ObjectUtil.sort(map.valueArray(), new Comparator() {
+      List list = ObjectUtil.sort(map.valueArray(), new Comparator<String>() {
         public int compare(String str1, String str2) {
           return new Long(str1).compareTo(new Long(str2));
         }

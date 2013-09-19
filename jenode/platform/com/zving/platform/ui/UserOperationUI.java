@@ -38,7 +38,7 @@ public class UserOperationUI extends UIFacade
   @Priv
   @Alias("getUsers")
   public DataTable getUserList() {
-    DAOSet userSet = new ZDUser().query(new Q("where Status='Y'", new Object[0]));
+     DAOSet<ZDUser> userSet = new ZDUser().query(new Q("where Status='Y'", new Object[0]));
     DataTable dt = new DataTable();
     dt.insertColumn("ID");
     dt.insertColumn("Name");

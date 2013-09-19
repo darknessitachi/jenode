@@ -26,134 +26,135 @@ import com.zving.schema.ZDMetaValue;
 import java.util.ArrayList;
 
 @Alias("MetaModelData")
-public class MetaModelDataUI extends UIFacade
-{
-  @Priv
-  public void bindBackendColumn(ListAction la)
-  {
-    long id = this.Request.getLong("ID");
-    if (id == 0L) {
-      return;
-    }
-    DataTable dt = new DataTable();
-    dt.insertColumn("Name");
-    dt.insertColumn("PlaceHolder");
-    dt.insertRow(new Object[] { "PKValue", "${PKValue}" });
+public class MetaModelDataUI extends UIFacade {
+	@Priv
+	public void bindBackendColumn(ListAction la) {
+		long id = this.Request.getLong("ID");
+		if (id == 0L) {
+			return;
+		}
+		DataTable dt = new DataTable();
+		dt.insertColumn("Name");
+		dt.insertColumn("PlaceHolder");
+		dt.insertRow(new Object[] { "PKValue", "${PKValue}" });
 
-    DAOSet set = PlatformCache.getMetaModel(id).getColumns();
-    for (ZDMetaColumn column : set) {
-      dt.insertRow(new Object[] { column.getName(), "${" + column.getCode() + "}" });
-    }
-    la.bindData(dt);
-  }
+		DAOSet<ZDMetaColumn> set = PlatformCache.getMetaModel(id).getColumns();
+		for (ZDMetaColumn column : set) {
+			dt.insertRow(new Object[] { column.getName(),
+					"${" + column.getCode() + "}" });
+		}
+		la.bindData(dt);
+	}
 
-  @Priv
-  public void bindGrid(DataGridAction dga) {
-    long id = this.Request.getLong("ID");
-    if (id == 0L) {
-      return;
-    }
-    dga.bindData(getSelectQ(id));
-  }
+	@Priv
+	public void bindGrid(DataGridAction dga) {
+		long id = this.Request.getLong("ID");
+		if (id == 0L) {
+			return;
+		}
+		dga.bindData(getSelectQ(id));
+	}
 
-  @Priv
-  public void init() {
-    long id = this.Request.getLong("ID");
-    if (id == 0L) {
-      return;
-    }
-    String pk = $V("PKValue");
-    if (ObjectUtil.empty(pk)) {
-      return;
-    }
-    Q qb = getSelectQ(id);
-    qb.append(" and PKValue=?", new Object[] { pk });
-    DataTable dt = qb.fetch();
-    if (dt.getRowCount() > 0) {
-      Mapx map = dt.getDataRow(0).toMapx();
-      for (String k : map.keyArray())
-        $S("MetaValue_" + k, map.get(k));
-    }
-  }
+	@Priv
+	public void init() {
+		long id = this.Request.getLong("ID");
+		if (id == 0L) {
+			return;
+		}
+		String pk = $V("PKValue");
+		if (ObjectUtil.empty(pk)) {
+			return;
+		}
+		Q qb = getSelectQ(id);
+		qb.append(" and PKValue=?", new Object[] { pk });
+		DataTable dt = qb.fetch();
+		if (dt.getRowCount() > 0) {
+			Mapx<String, Object> map = dt.getDataRow(0).toMapx();
+			for (String k : map.keyArray())
+				$S("MetaValue_" + k, map.get(k));
+		}
+	}
 
-  @Priv
-  public void bindGroupList(ListAction la)
-  {
-    long id = this.Request.getLong("ID");
-    if (id == 0L) {
-      return;
-    }
-    DataTable dt = PlatformCache.getMetaModel(id).getGroups().toDataTable();
-    la.bindData(dt);
-  }
+	@Priv
+	public void bindGroupList(ListAction la) {
+		long id = this.Request.getLong("ID");
+		if (id == 0L) {
+			return;
+		}
+		DataTable dt = PlatformCache.getMetaModel(id).getGroups().toDataTable();
+		la.bindData(dt);
+	}
 
-  @Priv
-  public void bindFieldList(ListAction la) {
-    long id = this.Request.getLong("ID");
-    if (id == 0L) {
-      return;
-    }
-    long groupID = la.getParentCurrentDataRow().getLong("ID");
-    DataTable dt = MetaUtil.getControlHTML(id, groupID);
-    la.bindData(dt);
-  }
+	@Priv
+	public void bindFieldList(ListAction la) {
+		long id = this.Request.getLong("ID");
+		if (id == 0L) {
+			return;
+		}
+		long groupID = la.getParentCurrentDataRow().getLong("ID");
+		DataTable dt = MetaUtil.getControlHTML(id, groupID);
+		la.bindData(dt);
+	}
 
-  @Priv("Platform.Metadata.AddData||Platform.Metadata.EditData")
-  public void save() {
-    long id = this.Request.getLong("ModelID");
-    String pk = $V("PKValue");
-    String oldPk = $V("OldPKValue");
-    if ((id == 0L) || (ObjectUtil.empty(pk))) {
-      fail(Lang.get("Platform.MetaModel.PKValueAndModelIDCanNotBeNull"));
-      return;
-    }
-    ZDMetaValue mv = new ZDMetaValue();
-    mv.setPKValue(pk);
-    mv.setModelID(id);
-    if ((!pk.equals(oldPk)) && (mv.fill())) {
-      fail(Lang.get("Platform.MetaModel.DuplicatePKValue"));
-      return;
-    }
-    MetadataBL.addMetadata(this.Request, Current.getTransaction());
-    if (Current.getTransaction().commit())
-      success(Lang.get("Common.SaveSuccess"));
-    else
-      success(Lang.get("Common.SaveFailed") + ":" + Current.getTransaction().getExceptionMessage());
-  }
+	@Priv("Platform.Metadata.AddData||Platform.Metadata.EditData")
+	public void save() {
+		long id = this.Request.getLong("ModelID");
+		String pk = $V("PKValue");
+		String oldPk = $V("OldPKValue");
+		if ((id == 0L) || (ObjectUtil.empty(pk))) {
+			fail(Lang.get("Platform.MetaModel.PKValueAndModelIDCanNotBeNull"));
+			return;
+		}
+		ZDMetaValue mv = new ZDMetaValue();
+		mv.setPKValue(pk);
+		mv.setModelID(id);
+		if ((!pk.equals(oldPk)) && (mv.fill())) {
+			fail(Lang.get("Platform.MetaModel.DuplicatePKValue"));
+			return;
+		}
+		MetadataBL.addMetadata(this.Request, Current.getTransaction());
+		if (Current.getTransaction().commit())
+			success(Lang.get("Common.SaveSuccess"));
+		else
+			success(Lang.get("Common.SaveFailed") + ":"
+					+ Current.getTransaction().getExceptionMessage());
+	}
 
-  @Priv("Platform.Metadata.DeleteData")
-  public void delete()
-  {
-    long id = this.Request.getLong("ID");
-    if (id == 0L) {
-      return;
-    }
-    String pks = $V("PKValues");
-    if (ObjectUtil.empty(pks)) {
-      return;
-    }
-    pks = StringUtil.replaceEx(pks, ",", "','");
-    Q qb = new Q("where ModelID=? and PKValue in ('" + pks + "')", new Object[] { Long.valueOf(id) });
-    DAOSet set = new ZDMetaValue().query(qb);
-    MetadataBL.deleteMetadata(set, Current.getTransaction());
-    if (Current.getTransaction().commit())
-      success(Lang.get("Common.DeleteSuccess"));
-    else
-      success(Lang.get("Common.DeleteFailed"));
-  }
+	@Priv("Platform.Metadata.DeleteData")
+	public void delete() {
+		long id = this.Request.getLong("ID");
+		if (id == 0L) {
+			return;
+		}
+		String pks = $V("PKValues");
+		if (ObjectUtil.empty(pks)) {
+			return;
+		}
+		pks = StringUtil.replaceEx(pks, ",", "','");
+		Q qb = new Q("where ModelID=? and PKValue in ('" + pks + "')",
+				new Object[] { Long.valueOf(id) });
+		DAOSet set = new ZDMetaValue().query(qb);
+		MetadataBL.deleteMetadata(set, Current.getTransaction());
+		if (Current.getTransaction().commit())
+			success(Lang.get("Common.DeleteSuccess"));
+		else
+			success(Lang.get("Common.DeleteFailed"));
+	}
 
-  public static Q getSelectQ(long id)
-  {
-    DAOSet set = PlatformCache.getMetaModel(id).getColumns();
-    if (set.size() == 0) {
-      return new Q("select * from ZDMetaValue where 1=2", new Object[0]);
-    }
-    ArrayList list = new ArrayList();
-    for (ZDMetaColumn column : set) {
-      list.add(column.getTargetField() + " as \"" + column.getCode() + "\"");
-    }
-    String table = PlatformCache.getMetaModel(id).getDAO().getTargetTable();
-    Q qb = new Q("select ModelID,PKValue," + StringUtil.join(list) + " from " + table + " where ModelID=?", new Object[] { Long.valueOf(id) });
-    return qb;
-  }
+	public static Q getSelectQ(long id) {
+		DAOSet<ZDMetaColumn> set = PlatformCache.getMetaModel(id).getColumns();
+		if (set.size() == 0) {
+			return new Q("select * from ZDMetaValue where 1=2", new Object[0]);
+		}
+		ArrayList list = new ArrayList();
+		for (ZDMetaColumn column : set) {
+			list.add(column.getTargetField() + " as \"" + column.getCode()
+					+ "\"");
+		}
+		String table = PlatformCache.getMetaModel(id).getDAO().getTargetTable();
+		Q qb = new Q("select ModelID,PKValue," + StringUtil.join(list)
+				+ " from " + table + " where ModelID=?",
+				new Object[] { Long.valueOf(id) });
+		return qb;
+	}
 }
