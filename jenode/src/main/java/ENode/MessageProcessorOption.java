@@ -78,7 +78,12 @@ public class MessageProcessorOption
 		privateCommittedEventExecutorCount = value;
 	}
 
+	public MessageProcessorOption()
+	{
+		this(1, 1, 1, 1);
+	}
 	/** Parameterized constructor.
+	 
 	 
 	 @param commandExecutorCount
 	 @param retryCommandExecutorCount

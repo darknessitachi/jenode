@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Plugin-Version: 2.0
+Plugin-Revision: 13693
+Plugin-ID: com.zving.platform
+Plugin-Author: Zving Software
+Plugin-Provider: Zving Software
+Plugin-CreateDate: 2013-08-09 20:22:56
