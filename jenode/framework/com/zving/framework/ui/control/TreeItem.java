@@ -45,7 +45,7 @@ public class TreeItem extends HtmlDt
   {
     HtmlDt item = new HtmlDt();
     item.Attributes.putAll(this.Attributes);
-    item.setAttribute("level", this.level);
+    item.setAttribute("level", this.level+"");
     item.setAttribute("id", this.action.getID() + "_" + this.ID);
     item.setAttribute("parentID", this.ParentID);
     item.setAttribute("lazy", this.lazy ? "1" : "0");

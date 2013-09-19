@@ -228,7 +228,7 @@ public class SimpleCharStream
   public void backup(int amount)
   {
     this.inBuf += amount;
-    if (this.bufpos -= amount < 0)
+    if ((this.bufpos -= amount) < 0)
       this.bufpos += this.bufsize;
   }
 
@@ -267,7 +267,7 @@ public class SimpleCharStream
       this.bufline = new int[buffersize];
       this.bufcolumn = new int[buffersize];
     }
-    this.prevCharIsLF = (this.prevCharIsCR = 0);
+    this.prevCharIsLF = (this.prevCharIsCR = false);
     this.tokenBegin = (this.inBuf = this.maxNextCharInd = 0);
     this.bufpos = -1;
   }
@@ -383,7 +383,6 @@ public class SimpleCharStream
   public void adjustBeginLineColumn(int newLine, int newCol)
   {
     int start = this.tokenBegin;
-    int len;
     int len;
     if (this.bufpos >= this.tokenBegin)
     {

@@ -117,8 +117,8 @@ public class BlockingTransaction extends Transaction
           try
           {
             this.dataAccess.close();
-          } catch (DatabaseException e1) {
-            e1.printStackTrace();
+          } catch (DatabaseException e1x) {
+            e1x.printStackTrace();
           }
         }
         finally

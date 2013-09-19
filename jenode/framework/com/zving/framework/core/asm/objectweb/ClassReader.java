@@ -146,25 +146,25 @@ public class ClassReader {
         String s = this.strings[i];
         if (s == null) {
           index = this.items[i];
-          s = this.strings[i] =  = readUTF(index + 2, 
-            readUnsignedShort(index), buf);
+//          s = this.strings[i] =  = readUTF(index + 2, 
+//            readUnsignedShort(index), buf);
         }
         item.set(tag, s, null, null);
         break;
       case 15:
         int fieldOrMethodRef = this.items[readUnsignedShort(index + 1)];
-        int nameType = this.items[readUnsignedShort(fieldOrMethodRef + 2)];
-        item.set(20 + readByte(index), 
-          readClass(fieldOrMethodRef, buf), 
-          readUTF8(nameType, buf), readUTF8(nameType + 2, buf));
+//        int nameType = this.items[readUnsignedShort(fieldOrMethodRef + 2)];
+//        item.set(20 + readByte(index), 
+//          readClass(fieldOrMethodRef, buf), 
+//          readUTF8(nameType, buf), readUTF8(nameType + 2, buf));
         break;
       case 18:
         if (classWriter.bootstrapMethods == null) {
           copyBootstrapMethods(classWriter, items2, buf);
         }
-        int nameType = this.items[readUnsignedShort(index + 2)];
-        item.set(readUTF8(nameType, buf), readUTF8(nameType + 2, buf), 
-          readUnsignedShort(index));
+//        int nameType = this.items[readUnsignedShort(index + 2)];
+//        item.set(readUTF8(nameType, buf), readUTF8(nameType + 2, buf), 
+//          readUnsignedShort(index));
         break;
       case 2:
       case 7:
@@ -257,21 +257,15 @@ public class ClassReader {
 					}
 					return b;
 				}
-				int n;
-				int len;
-				byte[] b;
 				len += n;
 				if (len == b.length) {
 					int last = is.read();
 					if (last < 0)
 						return b;
-					int last;
-					int n;
-					int len;
 					byte[] c = new byte[b.length + 1000];
 					System.arraycopy(b, 0, c, 0, len);
 					c[(len++)] = ((byte) last);
-					byte[] b = c;
+//					byte[] b = c;
 				}
 			}
 		} finally {
@@ -906,7 +900,7 @@ public class ClassReader {
 			case 15:
 				u = u + 4 - (offset & 0x3);
 
-				int label = offset + readInt(u);
+				label = offset + readInt(u);
 				int len = readInt(u + 4);
 				int[] keys = new int[len];
 				Label[] values = new Label[len];
@@ -957,7 +951,7 @@ public class ClassReader {
 				}
 				break;
 			case 8:
-				int cpIndex = this.items[readUnsignedShort(u + 1)];
+				cpIndex = this.items[readUnsignedShort(u + 1)];
 				int bsmIndex = context.bootstrapMethods[readUnsignedShort(cpIndex)];
 				Handle bsm = (Handle) readConst(readUnsignedShort(bsmIndex), c);
 				int bsmArgCount = readUnsignedShort(bsmIndex + 2);
@@ -968,8 +962,8 @@ public class ClassReader {
 					bsmIndex += 2;
 				}
 				cpIndex = this.items[readUnsignedShort(cpIndex + 2)];
-				String iname = readUTF8(cpIndex, c);
-				String idesc = readUTF8(cpIndex + 2, c);
+				 iname = readUTF8(cpIndex, c);
+				 idesc = readUTF8(cpIndex + 2, c);
 				mv.visitInvokeDynamicInsn(iname, idesc, bsm, bsmArgs);
 				u += 5;
 				break;
@@ -1051,7 +1045,7 @@ public class ClassReader {
 				av.visitEnd();
 			}
 		}
-		for (; i < n + synthetics; i++) {
+		for (int i=0; i < n + synthetics; i++) {
 			int j = readUnsignedShort(v);
 			v += 2;
 			for (; j > 0; j--) {
@@ -1160,8 +1154,8 @@ public class ClassReader {
 			case 90:
 				boolean[] zv = new boolean[size];
 				for (int i = 0; i < size; i++) {
-					zv[i] = (readInt(this.items[readUnsignedShort(v)]) != 0 ? 1
-							: false);
+//					zv[i] = (readInt(this.items[readUnsignedShort(v)]) != 0 ? 1
+//							: false);
 					v += 3;
 				}
 				av.visit(name, zv);
@@ -1283,13 +1277,12 @@ public class ClassReader {
 
 		}
 
-		frame.localCount = local;
+//		frame.localCount = local;
 	}
 
 	private int readFrame(int stackMap, boolean zip, boolean unzip,
 			Label[] labels, Context frame) {
 		char[] c = frame.buffer;
-		int tag;
 		int tag;
 		if (zip) {
 			tag = this.b[(stackMap++)] & 0xFF;
@@ -1300,11 +1293,11 @@ public class ClassReader {
 		frame.localDiff = 0;
 		int delta;
 		if (tag < 64) {
-			int delta = tag;
+			 delta = tag;
 			frame.mode = 3;
 			frame.stackCount = 0;
 		} else if (tag < 128) {
-			int delta = tag - 64;
+			 delta = tag - 64;
 			stackMap = readFrameType(frame.stack, 0, stackMap, c, labels);
 			frame.mode = 4;
 			frame.stackCount = 1;
@@ -1479,7 +1472,8 @@ public class ClassReader {
       return s;
     }
     index = this.items[item];
-    return this.strings[item] =  = readUTF(index + 2, readUnsignedShort(index), buf);
+    this.strings[item] = readUTF(index + 2, readUnsignedShort(index), buf);
+    return  this.strings[item];
   }
 
 	private String readUTF(int index, int utfLen, char[] buf) {

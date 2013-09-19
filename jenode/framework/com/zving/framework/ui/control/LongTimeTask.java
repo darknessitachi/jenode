@@ -31,7 +31,9 @@ public abstract class LongTimeTask extends Thread
     //   3: dup
     //   4: iconst_0
     //   5: invokespecial 54	com/zving/framework/ui/control/LongTimeTask$1:<init>	(Z)V
-    //   8: areturn } 
+    //   8: areturn 
+	  return null;
+	  } 
   public static LongTimeTask getInstanceById(long id) { return (LongTimeTask)map.get(new Long(id)); }
 
   public static void removeInstanceById(long id)

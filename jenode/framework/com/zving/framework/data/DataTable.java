@@ -489,7 +489,7 @@ public class DataTable
   public void sort(String columnName, String order, final boolean isNumber) {
     final String cn = columnName;
     final String od = order;
-    sort(new Comparator() {
+    sort(new Comparator<DataRow>() {
       public int compare(DataRow dr1, DataRow dr2) {
         Object v1 = dr1.get(cn);
         Object v2 = dr2.get(cn);

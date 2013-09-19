@@ -231,15 +231,15 @@ public class DataGridAction
     this.Table.setAttribute("SortString", this.SortString.toString());
 
     this.Table.setAttribute("id", this.ID);
-    this.Table.setAttribute("page", this.PageFlag);
-    this.Table.setAttribute("size", this.PageSize);
-    this.Table.setAttribute("method", this.Method);
-    this.Table.setAttribute("multiselect", this.MultiSelect);
-    this.Table.setAttribute("autofill", this.autoFill);
-    this.Table.setAttribute("autopagesize", this.autoPageSize);
-    this.Table.setAttribute("scroll", this.Scroll);
-    this.Table.setAttribute("lazy", this.Lazy);
-    this.Table.setAttribute("cachesize", this.cacheSize);
+    this.Table.setAttribute("page", this.PageFlag+"");
+    this.Table.setAttribute("size", this.PageSize+"");
+    this.Table.setAttribute("method", this.Method+"");
+    this.Table.setAttribute("multiselect", this.MultiSelect+"");
+    this.Table.setAttribute("autofill", this.autoFill+"");
+    this.Table.setAttribute("autopagesize", this.autoPageSize+"");
+    this.Table.setAttribute("scroll", this.Scroll+"");
+    this.Table.setAttribute("lazy", this.Lazy+"");
+    this.Table.setAttribute("cachesize", this.cacheSize+"");
 
     this.templateHtml = this.templateTR.getOuterHtml();
     if (this.templateHtml == null)
@@ -276,7 +276,7 @@ public class DataGridAction
 
     HttpVariableResolverEx vr = new HttpVariableResolverEx();
     LangUtil.convertDataTable(this.DataSource, User.getLanguage());
-    List list = PlaceHolderUtil.parse(this.templateHtml);
+    List<PlaceHolder> list = PlaceHolderUtil.parse(this.templateHtml);
     for (int i = 0; i < this.DataSource.getRowCount(); i++) {
       vr.setData(this.DataSource.getDataRow(i));
       FastStringBuilder sb = new FastStringBuilder();
@@ -338,8 +338,8 @@ public class DataGridAction
       for (int j = 1; j < this.Table.Children.size(); j++) {
         int rowNo = this.PageIndex * this.PageSize + j;
         if (rowNoFlag) {
-          this.Table.getTR(j).getTD(i).setInnerHTML(rowNo);
-          this.Table.getTR(j).getTD(i).setAttribute("rowno", rowNo);
+          this.Table.getTR(j).getTD(i).setInnerHTML(rowNo+"");
+          this.Table.getTR(j).getTD(i).setAttribute("rowno", rowNo+"");
           this.Table.getTR(j).getTD(i).setAttribute("class", "rowNo");
         }
 
@@ -469,7 +469,7 @@ public class DataGridAction
           sb.append(this.Table.getTR(j).getTD(i).getInnerHTML());
           this.Table.getTR(j).setAttribute("treenodeid", this.DataSource.getString(j - 1, this.IdentifierColumnName));
           this.Table.getTR(j).getTD(i).setInnerHTML(sb.toString());
-          this.Table.getTR(j).setAttribute("level", level);
+          this.Table.getTR(j).setAttribute("level", level+"");
         }
 
       }
@@ -606,7 +606,7 @@ public class DataGridAction
       }
       String html = getPageBarHtmlByType();
       this.pageBarTR.getTD(0).setInnerHTML(html);
-      this.pageBarTR.getTD(0).setColSpan(this.headTR.Children.size());
+      this.pageBarTR.getTD(0).setColSpan(this.headTR.Children.size()+"");
       this.pageBarTR.getTD(0).setID("_PageBar_" + this.ID);
       this.pageBarTR.getTD(0).setAttribute("pagebartype", this.pageBarTR.getAttribute("pagebartype"));
     } catch (Exception e) {
@@ -809,7 +809,7 @@ public class DataGridAction
       {
         Class clazz = Class.forName("com.zving.framework.data.DataTableUtil");
         Method dataTableToExcel = clazz.getMethod("dataTableToExcel", new Class[] { DataTable.class, OutputStream.class, 
-          [Ljava.lang.String.class, [Ljava.lang.String.class });
+          String[].class, String[].class });
         dataTableToExcel.invoke(null, new Object[] { dt, (OutputStream)this.Params.get("_OutputStream"), columnNames, widths });
       } catch (Exception localException1) {
       }

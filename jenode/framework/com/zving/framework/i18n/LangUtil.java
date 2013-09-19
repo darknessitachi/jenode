@@ -171,7 +171,7 @@ public class LangUtil
 
   public static String modify(String src, String lang, String value)
   {
-    Mapx map = null;
+    Mapx<String, String> map = null;
     if (src == null) {
       return src;
     }

@@ -25,7 +25,7 @@ public class Join extends AbstractFunction
   }
 
   public Class<?>[] getArgumentTypes() {
-    return new Class[] { [Ljava.lang.String.class, String.class };
+    return new Class[] { String[].class, String.class };
   }
 
   public String getFunctionPrefix() {

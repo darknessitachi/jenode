@@ -211,7 +211,6 @@ class MethodWriter extends MethodVisitor
     else
     {
       int delta;
-      int delta;
       if (this.stackMap == null) {
         this.stackMap = new ByteVector();
         delta = this.code.length;
@@ -341,7 +340,6 @@ class MethodWriter extends MethodVisitor
     if (this.compute != 2)
     {
       int n;
-      int n;
       if ((opcode == 22) || (opcode == 24) || 
         (opcode == 55) || (opcode == 57))
         n = var + 2;
@@ -355,7 +353,6 @@ class MethodWriter extends MethodVisitor
 
     if ((var < 4) && (opcode != 169))
     {
-      int opt;
       int opt;
       if (opcode < 54)
       {
@@ -406,9 +403,6 @@ class MethodWriter extends MethodVisitor
       {
         char c = desc.charAt(0);
         int size;
-        int size;
-        int size;
-        int size;
         switch (opcode) {
         case 178:
           size = this.stackSize + ((c == 'D') || (c == 'J') ? 2 : 1);
@@ -451,7 +445,6 @@ class MethodWriter extends MethodVisitor
 
           i.intVal = argSize;
         }
-        int size;
         int size;
         if (opcode == 184)
           size = this.stackSize - (argSize >> 2) + (argSize & 0x3) + 1;
@@ -640,7 +633,6 @@ class MethodWriter extends MethodVisitor
       }
       else
       {
-        int size;
         int size;
         if ((i.type == 5) || (i.type == 6))
           size = this.stackSize + 2;
@@ -852,8 +844,8 @@ class MethodWriter extends MethodVisitor
       int max = 0;
       Label changed = this.labels;
       Edge e;
-      for (; changed != null; 
-        e != null)
+      for (; changed != null; )
+//        e != null)
       {
         Label l = changed;
         changed = changed.next;
@@ -873,14 +865,14 @@ class MethodWriter extends MethodVisitor
 
         e = l.successors;
         continue;
-        Label n = e.successor.getFirst();
-        boolean change = f.merge(this.cw, n.frame, e.info);
-        if ((change) && (n.next == null))
-        {
-          n.next = changed;
-          changed = n;
-        }
-        e = e.next;
+//        Label n = e.successor.getFirst();
+//        boolean change = f.merge(this.cw, n.frame, e.info);
+//        if ((change) && (n.next == null))
+//        {
+//          n.next = changed;
+//          changed = n;
+//        }
+//        e = e.next;
       }
 
       Label l = this.labels;
@@ -993,8 +985,8 @@ class MethodWriter extends MethodVisitor
       int max = 0;
       Label stack = this.labels;
       Edge b;
-      for (; stack != null; 
-        b != null)
+      for (; stack != null; )
+//        b != null)
       {
         Label l = stack;
         stack = stack.next;
@@ -1012,18 +1004,18 @@ class MethodWriter extends MethodVisitor
           b = b.next;
 
           continue;
-          l = b.successor;
-
-          if ((l.status & 0x8) == 0)
-          {
-            l.inputStackTop = (b.info == 2147483647 ? 1 : start + 
-              b.info);
-
-            l.status |= 8;
-            l.next = stack;
-            stack = l;
-          }
-          b = b.next;
+//          l = b.successor;
+//
+//          if ((l.status & 0x8) == 0)
+//          {
+//            l.inputStackTop = (b.info == 2147483647 ? 1 : start + 
+//              b.info);
+//
+//            l.status |= 8;
+//            l.next = stack;
+//            stack = l;
+//          }
+//          b = b.next;
         }
       }
       this.maxStack = Math.max(maxStack, max);
@@ -1084,7 +1076,7 @@ class MethodWriter extends MethodVisitor
 
     }
 
-    for (i = 0; i < stacks.length; i++) {
+    for (int i = 0; i < stacks.length; i++) {
       int t = stacks[i];
       nStack++;
       if ((t == 16777220) || (t == 16777219)) {
@@ -1093,7 +1085,7 @@ class MethodWriter extends MethodVisitor
     }
 
     int frameIndex = startFrame(f.owner.position, nLocal, nStack);
-    for (i = 0; nLocal > 0; nLocal--) {
+    for (int i = 0; nLocal > 0; nLocal--) {
       int t = locals[i];
       this.frame[(frameIndex++)] = t;
       if ((t == 16777220) || (t == 16777219))
@@ -1101,7 +1093,7 @@ class MethodWriter extends MethodVisitor
       i++;
     }
 
-    for (i = 0; i < stacks.length; i++) {
+    for (int i = 0; i < stacks.length; i++) {
       int t = stacks[i];
       this.frame[(frameIndex++)] = t;
       if ((t == 16777220) || (t == 16777219)) {
@@ -1166,8 +1158,8 @@ class MethodWriter extends MethodVisitor
 
     }
 
-    this.frame[1] = (frameIndex - 3);
-    endFrame();
+//    this.frame[1] = (frameIndex - 3);
+//    endFrame();
   }
 
   private int startFrame(int offset, int nLocal, int nStack)
@@ -1209,7 +1201,6 @@ class MethodWriter extends MethodVisitor
     int localsSize = this.previousFrame[1];
     int type = 255;
     int k = 0;
-    int delta;
     int delta;
     if (this.frameCount == 0)
       delta = this.frame[0];
@@ -1629,7 +1620,7 @@ class MethodWriter extends MethodVisitor
       if (state == 3) {
         state = 2;
       }
-      u = 0;
+      int u = 0;
       while (u < b.length) {
         int opcode = b[u] & 0xFF;
         int insert = 0;
@@ -1641,7 +1632,6 @@ class MethodWriter extends MethodVisitor
           break;
         case 9:
           int label;
-          int label;
           if (opcode > 201)
           {
             opcode = opcode < 218 ? opcode - 49 : opcode - 20;
@@ -1652,7 +1642,7 @@ class MethodWriter extends MethodVisitor
           int newOffset = getNewOffset(allIndexes, allSizes, u, label);
           if (((newOffset < -32768) || 
             (newOffset > 32767)) && 
-            (resize[u] == 0)) {
+            (resize[u] == false)) {
             if ((opcode == 167) || (opcode == 168))
             {
               insert = 2;
@@ -1672,9 +1662,9 @@ class MethodWriter extends MethodVisitor
         case 14:
           if (state == 1)
           {
-            int newOffset = getNewOffset(allIndexes, allSizes, 0, u);
+             newOffset = getNewOffset(allIndexes, allSizes, 0, u);
             insert = -(newOffset & 0x3);
-          } else if (resize[u] == 0)
+          } else if (resize[u] == false)
           {
             insert = u & 0x3;
             resize[u] = true;
@@ -1686,9 +1676,9 @@ class MethodWriter extends MethodVisitor
         case 15:
           if (state == 1)
           {
-            int newOffset = getNewOffset(allIndexes, allSizes, 0, u);
+             newOffset = getNewOffset(allIndexes, allSizes, 0, u);
             insert = -(newOffset & 0x3);
-          } else if (resize[u] == 0)
+          } else if (resize[u] == false)
           {
             insert = u & 0x3;
             resize[u] = true;
@@ -1760,7 +1750,6 @@ class MethodWriter extends MethodVisitor
         break;
       case 9:
         int label;
-        int label;
         if (opcode > 201)
         {
           opcode = opcode < 218 ? opcode - 49 : opcode - 20;
@@ -1769,7 +1758,7 @@ class MethodWriter extends MethodVisitor
           label = u + readShort(b, u + 1);
         }
         int newOffset = getNewOffset(allIndexes, allSizes, u, label);
-        if (resize[u] != 0)
+        if (resize[u] != false)
         {
           if (opcode == 167) {
             newCode.putByte(200);
@@ -1791,8 +1780,8 @@ class MethodWriter extends MethodVisitor
         u += 3;
         break;
       case 10:
-        int label = u + readInt(b, u + 1);
-        int newOffset = getNewOffset(allIndexes, allSizes, u, label);
+         label = u + readInt(b, u + 1);
+         newOffset = getNewOffset(allIndexes, allSizes, u, label);
         newCode.putByte(opcode);
         newCode.putInt(newOffset);
         u += 5;
@@ -1803,9 +1792,9 @@ class MethodWriter extends MethodVisitor
 
         newCode.putByte(170);
         newCode.putByteArray(null, 0, (4 - newCode.length % 4) % 4);
-        int label = v + readInt(b, u);
+         label = v + readInt(b, u);
         u += 4;
-        int newOffset = getNewOffset(allIndexes, allSizes, v, label);
+         newOffset = getNewOffset(allIndexes, allSizes, v, label);
         newCode.putInt(newOffset);
         int j = readInt(b, u);
         u += 4;
@@ -1821,16 +1810,16 @@ class MethodWriter extends MethodVisitor
         }
         break;
       case 15:
-        int v = u;
+         v = u;
         u = u + 4 - (v & 0x3);
 
         newCode.putByte(171);
         newCode.putByteArray(null, 0, (4 - newCode.length % 4) % 4);
-        int label = v + readInt(b, u);
+         label = v + readInt(b, u);
         u += 4;
-        int newOffset = getNewOffset(allIndexes, allSizes, v, label);
+         newOffset = getNewOffset(allIndexes, allSizes, v, label);
         newCode.putInt(newOffset);
-        int j = readInt(b, u);
+         j = readInt(b, u);
         u += 4;
         newCode.putInt(j);
         for (; j > 0; j--) {
@@ -1894,7 +1883,7 @@ class MethodWriter extends MethodVisitor
         while (l != null)
         {
           u = l.position - 3;
-          if (((l.status & 0x20) != 0) || ((u >= 0) && (resize[u] != 0))) {
+          if (((l.status & 0x20) != 0) || ((u >= 0) && (resize[u] != false))) {
             getNewOffset(allIndexes, allSizes, l);
 
             visitFrame(l.frame);
@@ -1951,7 +1940,7 @@ class MethodWriter extends MethodVisitor
     while (attr != null) {
       Label[] labels = attr.getLabels();
       if (labels != null) {
-        for (i = labels.length - 1; i >= 0; i--) {
+        for (int i = labels.length - 1; i >= 0; i--) {
           getNewOffset(allIndexes, allSizes, labels[i]);
         }
       }

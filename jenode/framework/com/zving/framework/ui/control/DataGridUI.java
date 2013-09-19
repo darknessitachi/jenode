@@ -88,7 +88,6 @@ public class DataGridUI extends UIFacade
     if (StringUtil.isNotEmpty(strInsertRowIndex)) {
       Object dtv = this.Request.get("_ZVING_DATATABLE");
       DataTable dt;
-      DataTable dt;
       if (dtv.getClass().getSimpleName() == "DataTable") {
         dt = (DataTable)dtv;
       } else {

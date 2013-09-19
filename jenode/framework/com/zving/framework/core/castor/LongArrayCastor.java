@@ -10,7 +10,7 @@ public class LongArrayCastor extends AbstractInnerCastor
 
   public boolean canCast(Class<?> type)
   {
-    return ([Ljava.lang.Long.class == type) || ([J.class == type);
+    return (Long[].class == type) || (long[].class == type);
   }
 
   public Object cast(Object obj, Class<?> type) {

@@ -10,7 +10,7 @@ public class FloatArrayCastor extends AbstractInnerCastor
 
   public boolean canCast(Class<?> type)
   {
-    return ([Ljava.lang.Float.class == type) || ([F.class == type);
+    return (Float[].class == type) || (float[].class == type);
   }
 
   public Object cast(Object obj, Class<?> type) {

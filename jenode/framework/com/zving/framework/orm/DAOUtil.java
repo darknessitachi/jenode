@@ -95,7 +95,7 @@ public class DAOUtil
     try
     {
       Class c = bDAO.getDAO().getClass();
-      DAO dao = (DAO)c.newInstance();
+      T dao = (T)c.newInstance();
       for (int i = 0; i < dao.columns().length; i++) {
         dao.setV(i, bDAO.getV(i));
       }

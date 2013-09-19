@@ -24,7 +24,7 @@ public class ClassWriter extends ClassVisitor
   static final int LOOK_INSN = 15;
   static final int MANA_INSN = 16;
   static final int WIDE_INSN = 17;
-  static final byte[] TYPE = b;
+  static final byte[] TYPE = null;//b;
   static final int CLASS = 7;
   static final int FIELD = 9;
   static final int METH = 10;
@@ -518,7 +518,7 @@ public class ClassWriter extends ClassVisitor
       }
     int bootstrapMethodIndex;
     if (result != null) {
-      int bootstrapMethodIndex = result.index;
+       bootstrapMethodIndex = result.index;
       bootstrapMethods.length = position;
     } else {
       bootstrapMethodIndex = this.bootstrapMethodsCount++;
@@ -717,7 +717,7 @@ public class ClassWriter extends ClassVisitor
     ClassLoader classLoader = getClass().getClassLoader();
     try {
       Class c = Class.forName(type1.replace('/', '.'), false, classLoader);
-      d = Class.forName(type2.replace('/', '.'), false, classLoader);
+//      d = Class.forName(type2.replace('/', '.'), false, classLoader);
     }
     catch (Exception e)
     {
@@ -726,20 +726,21 @@ public class ClassWriter extends ClassVisitor
     }
     Class d;
     Class c;
-    if (c.isAssignableFrom(d)) {
-      return type1;
-    }
-    if (d.isAssignableFrom(c)) {
-      return type2;
-    }
-    if ((c.isInterface()) || (d.isInterface())) {
-      return "java/lang/Object";
-    }
-    do
-      c = c.getSuperclass();
-    while (!
-      c.isAssignableFrom(d));
-    return c.getName().replace('.', '/');
+    return "";
+//    if (c.isAssignableFrom(d)) {
+//      return type1;
+//    }
+//    if (d.isAssignableFrom(c)) {
+//      return type2;
+//    }
+//    if ((c.isInterface()) || (d.isInterface())) {
+//      return "java/lang/Object";
+//    }
+//    do
+//      c = c.getSuperclass();
+//    while (!
+//      c.isAssignableFrom(d));
+//    return c.getName().replace('.', '/');
   }
 
   private Item get(Item key)

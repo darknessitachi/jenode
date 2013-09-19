@@ -25,7 +25,7 @@ public class BackupDAO<T extends DAO<T>> extends DAO<BackupDAO<T>>
     try
     {
       this.clazz = c;
-      this.dao = ((DAO)this.clazz.newInstance());
+      this.dao = ((T)this.clazz.newInstance());
       DAOMetadata m = DAOMetadataManager.getMetadata(this.clazz);
       DAOColumn[] columns = DAOUtil.addBackupColumn(m.getColumns());
       String table = "B" + m.getTable();

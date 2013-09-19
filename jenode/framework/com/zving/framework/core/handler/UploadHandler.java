@@ -126,7 +126,7 @@ public class UploadHandler
         checkTimeout();
         uploadedFiles = (TaskFiles)uploadFileMap.get(taskID);
         if (uploadedFiles == null) {
-          uploadedFiles = new TaskFiles(null);
+          uploadedFiles = new TaskFiles();
           uploadFileMap.put(taskID, uploadedFiles);
         }
         uploadedFiles.LastTime = System.currentTimeMillis();
@@ -182,7 +182,7 @@ public class UploadHandler
   }
 
   private static void checkTimeout() {
-    ArrayList arr = uploadFileMap.keyArray();
+     ArrayList<String> arr = uploadFileMap.keyArray();
     long yesterday = System.currentTimeMillis() - 86400000L;
     for (String id : arr) {
       TaskFiles tf = (TaskFiles)uploadFileMap.get(id);

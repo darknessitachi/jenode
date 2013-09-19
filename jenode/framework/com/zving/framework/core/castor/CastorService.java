@@ -40,17 +40,17 @@ public class CastorService extends AbstractExtendService<ICastor>
       return BooleanCastor.getInstance().cast(obj, type);
     if (type == Date.class)
       return DateCastor.getInstance().cast(obj, type);
-    if (type == [Ljava.lang.String.class)
+    if (type == String[].class)
       return StringArrayCastor.getInstance().cast(obj, type);
-    if ((type == [I.class) || (type == [Ljava.lang.Integer.class))
+    if ((type == int[].class) || (type == Integer[].class))
       return StringArrayCastor.getInstance().cast(obj, type);
-    if ((type == [J.class) || (type == [Ljava.lang.Long.class))
+    if ((type == long[].class) || (type == Long[].class))
       return LongArrayCastor.getInstance().cast(obj, type);
-    if ((type == [F.class) || (type == [Ljava.lang.Float.class))
+    if ((type == float[].class) || (type == Float[].class))
       return FloatArrayCastor.getInstance().cast(obj, type);
-    if ((type == [D.class) || (type == [Ljava.lang.Double.class))
+    if ((type == double[].class) || (type ==Double[].class))
       return DoubleArrayCastor.getInstance().cast(obj, type);
-    if ((type == [Z.class) || (type == [Ljava.lang.Boolean.class)) {
+    if ((type == boolean[].class) || (type == Boolean[].class)) {
       return BooleanArrayCastor.getInstance().cast(obj, type);
     }
     for (ICastor castor : getInstance().getAll()) {

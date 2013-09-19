@@ -113,7 +113,7 @@ public class AjaxHandler extends AbstractTextHandler
       ExtendManager.invoke("com.zving.framework.AfterUIMethodInvoke", new Object[] { method });
       String result;
       if ((StringUtil.isNotEmpty(resultDataFormat)) && (resultDataFormat.equalsIgnoreCase("json"))) {
-        String result = Current.getResponse().toJSON();
+         result = Current.getResponse().toJSON();
         response.setContentType("application/json");
       } else {
         result = Current.getResponse().toXML();

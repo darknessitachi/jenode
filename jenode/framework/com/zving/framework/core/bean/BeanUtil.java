@@ -48,13 +48,13 @@ public class BeanUtil {
 
 	private static void fillArrays(Object bean, Map<String, Object> map) {
 		BeanDescription bim = BeanManager.getBeanDescription(bean.getClass());
-		HashMap arraySizes = new HashMap();
+		HashMap<String, Object> arraySizes = new HashMap<String, Object>();
 		int i1;
 		for (Iterator localIterator = map.keySet().iterator(); localIterator
 				.hasNext();) {
 			Object k = localIterator.next();
 			if (k != null) {
-				key = k.toString();
+				String key = k.toString();
 				if (key.indexOf("[") > 0) {
 					i1 = key.indexOf("[");
 					int i2 = key.indexOf("]");
@@ -73,9 +73,9 @@ public class BeanUtil {
 				}
 			}
 		}
-		String key = (i1 = arraySizes.keySet().toArray()).length;
-		for (String str1 = 0; str1 < key; str1++) {
-			Object k = i1[str1];
+		String[] keys = arraySizes.keySet().toArray(new String[0]);
+		for (int str1 = 0; str1 < arraySizes.keySet().toArray().length; str1++) {
+			Object k = keys[str1];
 			String prefix = k.toString();
 			BeanProperty bip = bim.getProperty(prefix);
 			if ((bip == null) || (!bip.getPropertyType().isArray())) {
@@ -94,7 +94,7 @@ public class BeanUtil {
 
 	private static void fillInnerBeans(Object bean, Map<String, Object> map) {
 		BeanDescription bim = BeanManager.getBeanDescription(bean.getClass());
-		HashMap innerBeans = new HashMap();
+		HashMap<String, String> innerBeans = new HashMap();
 		for (Iterator localIterator = map.keySet().iterator(); localIterator
 				.hasNext();) {
 			Object k = localIterator.next();
@@ -161,16 +161,13 @@ public class BeanUtil {
 		BeanDescription m1 = BeanManager.getBeanDescription(srcBean.getClass());
 		BeanDescription m2 = BeanManager.getBeanDescription(targetBean
 				.getClass());
-		Iterator localIterator2;
-		for (Iterator localIterator1 = m1.getPropertyMap().keyArray()
-				.iterator(); localIterator1.hasNext(); localIterator2.hasNext()) {
-			String k1 = (String) localIterator1.next();
-			localIterator2 = m2.getPropertyMap().keyArray().iterator();
-			continue;
-			String k2 = (String) localIterator2.next();
-			if (k1.equals(k2))
-				m2.getProperty(k2).write(targetBean,
-						m1.getProperty(k1).read(srcBean));
+		
+		for (String k1 : m1.getPropertyMap().keyArray()) {
+			for (String k2 : m2.getPropertyMap().keyArray()) {
+				if (k1.equals(k2))
+					m2.getProperty(k2).write(targetBean,
+							m1.getProperty(k1).read(srcBean));
+			}
 		}
 	}
 

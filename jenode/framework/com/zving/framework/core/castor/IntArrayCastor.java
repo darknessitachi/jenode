@@ -10,7 +10,7 @@ public class IntArrayCastor extends AbstractInnerCastor
 
   public boolean canCast(Class<?> type)
   {
-    return ([Ljava.lang.Integer.class == type) || ([I.class == type);
+    return (Integer[].class == type) || (int[].class == type);
   }
 
   public Object cast(Object obj, Class<?> type) {

@@ -38,7 +38,7 @@ public class ChildTabTag extends AbstractTag
     String content = getBody();
     try {
       if (StringUtil.isEmpty(this.id)) {
-        this.id = (No++);
+        this.id = (No++)+"";
       }
       if (this.onClick == null) {
         this.onClick = "";

@@ -13,7 +13,7 @@ public class URLHandlerService extends AbstractExtendService<IURLHandler>
 
   protected void prepareItemList() {
     super.prepareItemList();
-    this.itemList = ObjectUtil.sort(this.itemList, new Comparator() {
+    this.itemList = ObjectUtil.sort(this.itemList, new Comparator<IURLHandler>() {
       public int compare(IURLHandler o1, IURLHandler o2) {
         return o1.getOrder() - o2.getOrder();
       }

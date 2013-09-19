@@ -12,7 +12,7 @@ public class DoubleArrayCastor extends AbstractInnerCastor
 
   public boolean canCast(Class<?> type)
   {
-    return ([Ljava.lang.Double.class == type) || ([D.class == type);
+    return (Double[].class == type) || (double[].class == type);
   }
 
   public Object cast(Object obj, Class<?> type) {

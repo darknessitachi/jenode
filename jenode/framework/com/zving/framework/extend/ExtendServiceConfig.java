@@ -98,7 +98,7 @@ public class ExtendServiceConfig
             Class clazz = Class.forName(this.className);
             try {
               IExtendService tmp = (IExtendService)clazz.newInstance();
-              List list = ExtendManager.getInstance().findItems(this.id);
+              List<ExtendItemConfig> list = ExtendManager.getInstance().findItems(this.id);
               if (ObjectUtil.notEmpty(list)) {
                 for (ExtendItemConfig item : list) {
                   try {

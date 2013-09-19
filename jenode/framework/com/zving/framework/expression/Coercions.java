@@ -148,7 +148,7 @@ public class Coercions
     if ((pClass == Integer.class) || (pClass == Integer.TYPE))
       return PrimitiveObjects.getInteger((int)pValue);
     if ((pClass == Long.class) || (pClass == Long.TYPE))
-      return PrimitiveObjects.getLong(()pValue);
+      return PrimitiveObjects.getLong((long)pValue);
     if ((pClass == Float.class) || (pClass == Float.TYPE))
       return PrimitiveObjects.getFloat((float)pValue);
     if ((pClass == Double.class) || (pClass == Double.TYPE)) {

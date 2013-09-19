@@ -34,17 +34,12 @@ public abstract class AbstractJSONParser
         while (lexer.token() == 16)
           lexer.nextToken();
       Object value;
-      Object value;
-      Object value;
-      Object value;
       switch (lexer.token()) {
       case 2:
-        Object value = lexer.integerValue();
+         value = lexer.integerValue();
         lexer.nextToken(16);
         break;
       case 3:
-        Object value;
-        Object value;
         if (lexer.isEnabled(Feature.UseBigDecimal))
           value = lexer.decimalValue();
         else {
@@ -55,10 +50,8 @@ public abstract class AbstractJSONParser
       case 4:
         String stringLiteral = lexer.stringVal();
         lexer.nextToken(16);
-        Object value;
         if (lexer.isEnabled(Feature.AllowISO8601DateFormat)) {
           JSONScanner iso8601Lexer = new JSONScanner(stringLiteral);
-          Object value;
           if (iso8601Lexer.scanISO8601DateIfMatch())
             value = iso8601Lexer.getCalendar().getTime();
           else
@@ -70,11 +63,11 @@ public abstract class AbstractJSONParser
 
         break;
       case 6:
-        Object value = Boolean.TRUE;
+         value = Boolean.TRUE;
         lexer.nextToken(16);
         break;
       case 7:
-        Object value = Boolean.FALSE;
+         value = Boolean.FALSE;
         lexer.nextToken(16);
         break;
       case 12:
@@ -88,7 +81,7 @@ public abstract class AbstractJSONParser
         value = items;
         break;
       case 8:
-        Object value = null;
+         value = null;
         lexer.nextToken(4);
         break;
       case 15:
@@ -127,7 +120,6 @@ public abstract class AbstractJSONParser
       lexer.nextToken();
       return intValue;
     case 3:
-      Object value;
       Object value;
       if (isEnabled(Feature.UseBigDecimal))
         value = lexer.decimalValue();

@@ -63,7 +63,7 @@ public class JarResourceRoot
       path = path.substring(0, path.length() - 1);
     }
     String[] arr = StringUtil.splitEx(path, "/");
-    Mapx current = all;
+     Mapx<String, Object> current = all;
     Mapx map;
     for (int i = 0; i < arr.length; i++) {
       Object obj = current.get(arr[i]);
@@ -114,7 +114,7 @@ public class JarResourceRoot
     try
     {
       JarFile jar = new JarFile(f);
-      Mapx files = ZipUtil.getFileListInZip(f.getAbsolutePath());
+       Mapx<String, Long> files = ZipUtil.getFileListInZip(f.getAbsolutePath());
       for (String k : files.keyArray()) {
         JarResourceEntry re = new JarResourceEntry(f.getAbsolutePath(), jar.getEntry(k).getTime(), k, false, ((Long)files.get(k)).longValue());
         String[] arr = StringUtil.splitEx(k, "/");

@@ -193,8 +193,8 @@ public class DBConnPoolImpl
                     try
                     {
                       conn2.Conn.close();
-                    } catch (SQLException e) {
-                      e.printStackTrace();
+                    } catch (SQLException ex) {
+                      ex.printStackTrace();
                     }
                   }
                   finally

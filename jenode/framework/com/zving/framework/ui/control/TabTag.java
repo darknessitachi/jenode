@@ -46,7 +46,7 @@ public class TabTag extends AbstractTag
       sb.append("</td></tr>");
       String selectedID = "";
 
-      ArrayList children = (ArrayList)this.pageContext.getAttribute("_ZVING_TABTAGKEY");
+      ArrayList<String[]> children = (ArrayList)this.pageContext.getAttribute("_ZVING_TABTAGKEY");
       if (ObjectUtil.notEmpty(children)) {
         for (String[] arr : children) {
           String id = arr[0];

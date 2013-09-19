@@ -213,7 +213,7 @@ public class Type
       }
       return new Type(9, buf, off, len + 1);
     case 'L':
-      int len = 1;
+       len = 1;
       while (buf[(off + len)] != ';') {
         len++;
       }
@@ -383,49 +383,41 @@ public class Type
       if (d.isPrimitive())
       {
         char car;
-        char car;
         if (d == Integer.TYPE) {
           car = 'I';
         }
         else
         {
-          char car;
           if (d == Void.TYPE) {
             car = 'V';
           }
           else
           {
-            char car;
             if (d == Boolean.TYPE) {
               car = 'Z';
             }
             else
             {
-              char car;
               if (d == Byte.TYPE) {
                 car = 'B';
               }
               else
               {
-                char car;
                 if (d == Character.TYPE) {
                   car = 'C';
                 }
                 else
                 {
-                  char car;
                   if (d == Short.TYPE) {
                     car = 'S';
                   }
                   else
                   {
-                    char car;
                     if (d == Double.TYPE) {
                       car = 'D';
                     }
                     else
                     {
-                      char car;
                       if (d == Float.TYPE)
                         car = 'F';
                       else

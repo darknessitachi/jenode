@@ -72,7 +72,7 @@ public class UploadUI extends UIFacade
         ts.LastTime = System.currentTimeMillis();
         ts.StatusStr = Status;
       } else {
-        TaskStatus ts = new TaskStatus(null);
+        TaskStatus ts = new TaskStatus();
         ts.StatusStr = Status;
         ts.LastTime = System.currentTimeMillis();
         uploadTaskMap.put(taskID, ts);
@@ -81,7 +81,7 @@ public class UploadUI extends UIFacade
   }
 
   private static void checkTimeout() {
-    ArrayList arr = uploadTaskMap.keyArray();
+    ArrayList<String> arr = uploadTaskMap.keyArray();
     long yesterday = System.currentTimeMillis() - 86400000L;
     for (String id : arr) {
       TaskStatus ts = (TaskStatus)uploadTaskMap.get(id);

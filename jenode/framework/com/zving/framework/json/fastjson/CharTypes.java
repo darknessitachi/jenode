@@ -67,6 +67,6 @@ public final class CharTypes
 
   public static boolean isSpecial_doubleQuotes(char ch)
   {
-    return (ch < specicalFlags_doubleQuotes.length) && (specicalFlags_doubleQuotes[ch] != 0);
+    return (ch < specicalFlags_doubleQuotes.length) && (specicalFlags_doubleQuotes[ch] != false);
   }
 }

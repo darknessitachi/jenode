@@ -192,7 +192,7 @@ public class DBUtil
   }
 
   public static String sqlBitAndFunction(String columnName, int n) {
-    return sqlBitAndFunction(columnName, n, null);
+    return sqlBitAndFunction(columnName, n+"", null);
   }
 
   public static String sqlBitAndFunction(String columnName, String n, String poolName)

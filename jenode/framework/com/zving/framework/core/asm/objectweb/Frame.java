@@ -26,7 +26,7 @@ final class Frame
   static final int LONG = 16777220;
   static final int NULL = 16777221;
   static final int UNINITIALIZED_THIS = 16777222;
-  static final int[] SIZE = b;
+  static final int[] SIZE = null;//b;
   Label owner;
   int[] inputLocals;
   int[] inputStack;
@@ -142,14 +142,6 @@ final class Frame
     while (desc.charAt(dims) == '[')
       dims++;
     int data;
-    int data;
-    int data;
-    int data;
-    int data;
-    int data;
-    int data;
-    int data;
-    int data;
     switch (desc.charAt(dims)) {
     case 'Z':
       data = 16777225;
@@ -188,7 +180,8 @@ final class Frame
       return this.outputStack[(--this.outputStackTop)];
     }
 
-    return 0x3000000 | ---this.owner.inputStackTop;
+    return 0;
+//    return 0x3000000 | ---this.owner.inputStackTop;
   }
 
   private void pop(int elements)
@@ -237,7 +230,6 @@ final class Frame
     }
     else
     {
-      int s;
       if ((t & 0xFFF00000) == 25165824) {
         String type = cw.typeTable[(t & 0xFFFFF)].strVal1;
         s = 0x1700000 | cw.addType(type);
@@ -245,7 +237,6 @@ final class Frame
         return t;
       }
     }
-    int s;
     for (int j = 0; j < this.initializationCount; j++) {
       int u = this.initializations[j];
       int dim = u & 0xF0000000;
@@ -402,8 +393,8 @@ final class Frame
     case 54:
     case 56:
     case 58:
-      int t1 = pop();
-      set(arg, t1);
+//      int t1 = pop();
+//      set(arg, t1);
       if (arg > 0) {
         int t2 = get(arg - 1);
 
@@ -417,8 +408,8 @@ final class Frame
     case 55:
     case 57:
       pop(1);
-      int t1 = pop();
-      set(arg, t1);
+//      int t1 = pop();
+//      set(arg, t1);
       set(arg + 1, 16777216);
       if (arg > 0) {
         int t2 = get(arg - 1);
@@ -475,61 +466,61 @@ final class Frame
       pop(2);
       break;
     case 89:
-      int t1 = pop();
-      push(t1);
-      push(t1);
+//      int t1 = pop();
+//      push(t1);
+//      push(t1);
       break;
     case 90:
-      int t1 = pop();
+//      int t1 = pop();
       int t2 = pop();
-      push(t1);
-      push(t2);
-      push(t1);
+//      push(t1);
+//      push(t2);
+//      push(t1);
       break;
     case 91:
-      int t1 = pop();
-      int t2 = pop();
+//      int t1 = pop();
+//      int t2 = pop();
       int t3 = pop();
-      push(t1);
-      push(t3);
-      push(t2);
-      push(t1);
+//      push(t1);
+//      push(t3);
+//      push(t2);
+//      push(t1);
       break;
     case 92:
-      int t1 = pop();
-      int t2 = pop();
-      push(t2);
-      push(t1);
-      push(t2);
-      push(t1);
+//      int t1 = pop();
+//      int t2 = pop();
+//      push(t2);
+//      push(t1);
+//      push(t2);
+//      push(t1);
       break;
     case 93:
-      int t1 = pop();
-      int t2 = pop();
-      int t3 = pop();
-      push(t2);
-      push(t1);
-      push(t3);
-      push(t2);
-      push(t1);
+//      int t1 = pop();
+//      int t2 = pop();
+//      int t3 = pop();
+//      push(t2);
+//      push(t1);
+//      push(t3);
+//      push(t2);
+//      push(t1);
       break;
     case 94:
-      int t1 = pop();
-      int t2 = pop();
-      int t3 = pop();
+//      int t1 = pop();
+//      int t2 = pop();
+//      int t3 = pop();
       int t4 = pop();
-      push(t2);
-      push(t1);
-      push(t4);
-      push(t3);
-      push(t2);
-      push(t1);
+//      push(t2);
+//      push(t1);
+//      push(t4);
+//      push(t3);
+//      push(t2);
+//      push(t1);
       break;
     case 95:
-      int t1 = pop();
-      int t2 = pop();
-      push(t1);
-      push(t2);
+//      int t1 = pop();
+//      int t2 = pop();
+//      push(t1);
+//      push(t2);
       break;
     case 96:
     case 100:
@@ -642,10 +633,10 @@ final class Frame
     case 185:
       pop(item.strVal3);
       if (opcode != 184) {
-        int t1 = pop();
+//        int t1 = pop();
         if ((opcode == 183) && 
           (item.strVal2.charAt(0) == '<')) {
-          init(t1);
+//          init(t1);
         }
       }
       push(cw, item.strVal3);
@@ -696,7 +687,7 @@ final class Frame
       }
       break;
     case 192:
-      String s = item.strVal1;
+       s = item.strVal1;
       pop();
       if (s.charAt(0) == '[')
         push(cw, s);
@@ -770,20 +761,16 @@ final class Frame
       int t;
       if ((this.outputLocals != null) && (i < this.outputLocals.length)) {
         int s = this.outputLocals[i];
-        int t;
         if (s == 0) {
           t = this.inputLocals[i];
         } else {
           int dim = s & 0xF0000000;
           int kind = s & 0xF000000;
-          int t;
           if (kind == 16777216) {
             t = s;
           }
           else
           {
-            int t;
-            int t;
             if (kind == 33554432)
               t = dim + this.inputLocals[(s & 0x7FFFFF)];
             else {
@@ -805,7 +792,7 @@ final class Frame
     }
 
     if (edge > 0) {
-      for (i = 0; i < nLocal; i++) {
+      for (int i = 0; i < nLocal; i++) {
         int t = this.inputLocals[i];
         changed |= merge(cw, t, frame.inputLocals, i);
       }
@@ -823,25 +810,23 @@ final class Frame
       changed = true;
     }
 
-    for (i = 0; i < nInputStack; i++) {
+    for (int i = 0; i < nInputStack; i++) {
       int t = this.inputStack[i];
       if (this.initializations != null) {
         t = init(cw, t);
       }
       changed |= merge(cw, t, frame.inputStack, i);
     }
-    for (i = 0; i < this.outputStackTop; i++) {
+    for (int i = 0; i < this.outputStackTop; i++) {
       int s = this.outputStack[i];
       int dim = s & 0xF0000000;
       int kind = s & 0xF000000;
-      int t;
       int t;
       if (kind == 16777216) {
         t = s;
       }
       else
       {
-        int t;
         if (kind == 33554432)
           t = dim + this.inputLocals[(s & 0x7FFFFF)];
         else {
@@ -879,17 +864,14 @@ final class Frame
       return true;
     }
     int v;
-    int v;
     if (((u & 0xFF00000) == 24117248) || ((u & 0xF0000000) != 0))
     {
       if (t == 16777221)
       {
         return false;
       }
-      int v;
       if ((t & 0xFFF00000) == (u & 0xFFF00000))
       {
-        int v;
         if ((u & 0xFF00000) == 24117248)
         {
           v = t & 0xF0000000 | 0x1700000 | 
@@ -902,7 +884,6 @@ final class Frame
       }
       else
       {
-        int v;
         if (((t & 0xFF00000) == 24117248) || ((t & 0xF0000000) != 0))
         {
           v = 0x1700000 | cw.addType("java/lang/Object");
@@ -913,7 +894,6 @@ final class Frame
     }
     else
     {
-      int v;
       if (u == 16777221)
       {
         v = ((t & 0xFF00000) == 24117248) || ((t & 0xF0000000) != 0) ? t : 16777216;

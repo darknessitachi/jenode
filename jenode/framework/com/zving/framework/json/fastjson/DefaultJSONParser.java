@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class DefaultJSONParser extends AbstractJSONParser
 {
-  public static final int DEFAULT_PARSER_FEATURE = features;
+  public static final int DEFAULT_PARSER_FEATURE ;
   protected final JSONLexer lexer;
   protected final Object input;
   protected final SymbolTable symbolTable;
@@ -26,6 +26,7 @@ public class DefaultJSONParser extends AbstractJSONParser
     features |= Feature.AllowArbitraryCommas.getMask();
     features |= Feature.SortFeidFastMatch.getMask();
     features |= Feature.IgnoreNotMatch.getMask();
+    DEFAULT_PARSER_FEATURE = features;
   }
 
   public DefaultJSONParser(String input)
@@ -88,7 +89,7 @@ public class DefaultJSONParser extends AbstractJSONParser
       }
 
       if (ch == '"') {
-        String key = lexer.scanSymbol(this.symbolTable, '"');
+         key = lexer.scanSymbol(this.symbolTable, '"');
         lexer.skipWhitespace();
         ch = lexer.getCurrent();
         if (ch != ':')
@@ -104,7 +105,7 @@ public class DefaultJSONParser extends AbstractJSONParser
             throw new JSONException("syntax error");
           }
 
-          String key = lexer.scanSymbol(this.symbolTable, '\'');
+           key = lexer.scanSymbol(this.symbolTable, '\'');
           lexer.skipWhitespace();
           ch = lexer.getCurrent();
           if (ch != ':')
@@ -148,7 +149,6 @@ public class DefaultJSONParser extends AbstractJSONParser
         object.put(key, value);
       } else if (((ch >= '0') && (ch <= '9')) || (ch == '-')) {
         lexer.scanNumber();
-        Object value;
         Object value;
         if (lexer.token() == 2)
           value = lexer.integerValue();
